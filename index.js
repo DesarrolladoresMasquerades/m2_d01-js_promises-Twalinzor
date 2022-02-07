@@ -57,13 +57,14 @@ console.log(
   )
 );
 */
-
+/* 
 function obtainDirections(step) {
   return new Promise((resolvedCb, rejectedCb) => {
     setTimeout(() => {
       console.log(directions[step]);
-      if (!directions[step]) rejectedCb("Instructions not found.");
-      else resolvedCb();
+      if (!directions[step])
+        rejectedCb(`Directions not found for step ${step}.`);
+      else resolvedCb(`Directions GIVEN for step ${step}.`);
     }, 3 * 1000);
   });
 }
@@ -72,7 +73,10 @@ obtainDirections(0)
   .then(() => obtainDirections(1))
   .then(() => obtainDirections(2))
   .then(() => obtainDirections(3))
-  .then(() => obtainDirections(1000));
+  .then(() => obtainDirections(1000))
+  .catch((error) => {
+    console.log("There was an error: " + error);
+  });
 
 const magicButton = document.getElementById("magic-button");
 
@@ -84,3 +88,35 @@ function handleMagicClick() {
     .then(() => obtainDirections(2))
     .then(() => obtainDirections(3));
 }
+*/
+
+function onclickHandler() {
+  return new Promise((resolveCb, rejectCb) => {
+    /**
+     * Equivalent to:
+     * let randomResult
+     * if( Math.random() > 0.5 ) randomResult = true
+     * else randomResult = false
+     *
+     */
+    const randomeResult = Math.random() > 0.5; // ? true : false;
+
+    if (randomeResult) {
+      resolveCb(" You have another to do!");
+    } else {
+      rejectCb("You ran out of todos");
+    }
+  })
+    .then((newTodo) => {
+      const todoList = document.getElementById("todo-list");
+      todoList.innerHTML += `<div> ${newTodo} </div>`;
+    })
+    .catch((err) => {
+      const todoList = document.getElementById("todo-list");
+      todoList.innerHTML = `<h3> ${err} </h3>`;
+    });
+}
+
+const magicButton = document.getElementById("magic-button");
+
+magicButton.onclick = onclickHandler;
