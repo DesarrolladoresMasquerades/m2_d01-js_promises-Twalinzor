@@ -29,7 +29,7 @@ console.log("Waiting for the fake server to reply...");
  * 
  */
 
-// ----- Server simulation of random response -----
+// ----- Server simulation of random response -------
 // ----- You have to make it work as intended -----
 const serverResponse = new Promise(responseHandler);
 
